@@ -3,7 +3,7 @@ name: Déploiement vers Vercel
 on:
   push:
     branches:
-      - main  # Déclenchement sur la branche principale
+      - main # Déclenchement sur la branche principale
 
 jobs:
   deploy:
@@ -18,8 +18,8 @@ jobs:
       - name: Installation de Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22'  # Mets la version de Node.js adaptée à ton projet
-          cache: 'npm'
+          node-version: "22" # Mets la version de Node.js adaptée à ton projet
+          cache: "npm"
 
       - name: Installation des dépendances
         run: npm install
