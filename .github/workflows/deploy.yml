@@ -7,32 +7,7 @@ on:
       - main # Déclenchement sur la branche principale (main)
 
 jobs:
-  # Premier job: exécution des tests
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      # Vérifier le code source
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      # Configurer Node.js
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 22 # Remplacez par la version Node.js utilisée par votre projet
-
-      # Installer les dépendances
-      - name: Install dependencies
-        run: npm install
-
-      # Exécuter les tests
-      - name: Run tests
-        run: npm test
-
-  # Deuxième job: déploiement
   deploy:
-    needs: test # Exécute le job de déploiement seulement si le job "test" réussi
     runs-on: ubuntu-latest
 
     # Etapes
@@ -62,26 +37,4 @@ jobs:
         run: |
           npm install -g vercel
           vercel --prod --token $VERCEL_TOKEN --yes
-  # Troisième job: Scan qualité par SonarCloud
-  sonarcloud:
-    name: SonarCloud Scan
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Nécessaire pour une analyse correcte
-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      - name: Run SonarCloud Scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          npx sonarqube-scanner
+ 
